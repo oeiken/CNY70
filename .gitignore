@@ -1,0 +1,9 @@
+CMakeFiles/
+CNY70/
+*.bak
+*.elf
+*.lst
+*.hex
+*.cmake
+/.project
+./docu/html
