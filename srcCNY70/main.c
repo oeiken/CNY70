@@ -15,6 +15,7 @@
 // unter Verwendung der internen Referenzspannung von nominell 1,1V.
 // Zur Anpassung an andere AVR und/oder andere Referenzspannungen
 // siehe Erläuterungen in diesem Tutorial und im Datenblatt
+// Changed to run on ATtiny85
  
 /* ADC initialisieren */
 void ADC_Init(void)
