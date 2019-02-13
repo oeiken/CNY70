@@ -7,3 +7,5 @@ CNY70/
 *.cmake
 /.project
 ./docu/html
+/CMakeCache.txt
+Makefile
