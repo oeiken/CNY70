@@ -44,7 +44,7 @@ set(LIB_DIR_PATH "E:/Data/avr8-gnu-toolchain/avr/lib")
 #                    "${SRC_PATH}/*.s"
 #                    "${SRC_PATH}/*.sx"
 #                    "${SRC_PATH}/*.asm")
-set(SRC_FILES ./srcCNY70/main.c)
+set(SRC_FILES ../srcCNY70/main.c)
 
 set(LIB_SRC_FILES)
 set(LIB_INC_PATH)
@@ -83,13 +83,13 @@ set(CMAKE_ASM_FLAGS   "${CFLAGS}")
 # Project setup
 include_directories(${INC_PATH} ${LIB_INC_PATH})
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${LIB_SRC_FILES})
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "./build/${PROJECT_NAME}.elf")
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}.elf")
 
 # Compiling targets
-add_custom_target(strip ALL     ${AVRSTRIP} "./build/${PROJECT_NAME}.elf" DEPENDS ${PROJECT_NAME})
-add_custom_target(hex   ALL     ${OBJCOPY} -R .eeprom -O ihex "./build/${PROJECT_NAME}.elf" "./build/${PROJECT_NAME}.hex" DEPENDS strip)
-add_custom_target(eeprom        ${OBJCOPY} -j .eeprom --change-section-lma .eeprom=0 -O ihex "./build/${PROJECT_NAME}.elf" "./build/${PROJECT_NAME}.eeprom" DEPENDS strip)
-add_custom_target(disassemble ALL  ${OBJDUMP} -h -S "./build/${PROJECT_NAME}.elf" > "./build/${PROJECT_NAME}.lst" DEPENDS strip)
+add_custom_target(strip ALL     ${AVRSTRIP} "${PROJECT_NAME}.elf" DEPENDS ${PROJECT_NAME})
+add_custom_target(hex   ALL     ${OBJCOPY} -R .eeprom -O ihex "${PROJECT_NAME}.elf" "${PROJECT_NAME}.hex" DEPENDS strip)
+add_custom_target(eeprom        ${OBJCOPY} -j .eeprom --change-section-lma .eeprom=0 -O ihex "${PROJECT_NAME}.elf" "${PROJECT_NAME}.eeprom" DEPENDS strip)
+add_custom_target(disassemble ALL  ${OBJDUMP} -h -S "${PROJECT_NAME}.elf" > "${PROJECT_NAME}.lst" DEPENDS strip)
 add_custom_target(coff	 	${OBJCOPY} ${COFFARGS} -O elf32-avr "./build/${PROJECT_NAME}.elf" "./build/${PROJECT_NAME}.cof" DEPENDS strip)
 # Flashing targets
 add_custom_target(flash         ${AVRDUDE} -c ${PROG_TYPE} -p ${MCU} ${PROG_ARGS} -U flash:w:./build/${PROJECT_NAME}.hex DEPENDS hex)
@@ -109,7 +109,7 @@ add_custom_target(clear_eeprom_save_fuse ${AVRDUDE} -c ${PROG_TYPE} -p ${MCU} ${
 # Utilities targets
 add_custom_target(avr_terminal  ${AVRDUDE} -c ${PROG_TYPE} -p ${MCU} ${PROG_ARGS} -nt)
 
-set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "./build/${PROJECT_NAME}.hex;./build/${PROJECT_NAME}.eeprom;./build/${PROJECT_NAME}.lst")
+set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${PROJECT_NAME}.hex;${PROJECT_NAME}.eeprom;${PROJECT_NAME}.lst")
 
 # Config logging
 message("* ")
